@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>底层探索者 - 计算机底层知识学习助手</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">底层探索者</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-page="dashboard">学习仪表板</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="learning-path">学习路径</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="concept-explorer">概念探索</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="practice">练习中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- 仪表板页面 -->
+        <div id="dashboard-page" class="page-content active">
+            <h2>学习仪表板</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header">学习进度</div>
+                        <div class="card-body">
+                            <div class="progress mb-3">
+                                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-stats d-flex justify-content-between">
+                                <div>已学习概念: <span id="completed-concepts">0</span>/<span id="total-concepts">0</span></div>
+                                <div>学习时间: <span id="learning-time">0</span> 小时</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">推荐学习内容</div>
+                        <div class="card-body">
+                            <ul id="recommended-concepts" class="list-group"></ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header">学习目标</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="learning-goal" class="form-label">你的学习目标是什么？</label>
+                                <textarea id="learning-goal" class="form-control" rows="3" placeholder="例如：理解操作系统内存管理机制"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="knowledge-level" class="form-label">当前知识水平</label>
+                                <select id="knowledge-level" class="form-select">
+                                    <option value="beginner">入门级 (了解基本编程概念)</option>
+                                    <option value="intermediate">中级 (有一定编程经验)</option>
+                                    <option value="advanced">高级 (熟悉多种编程语言和系统)</option>
+                                </select>
+                            </div>
+                            <button id="update-goal-btn" class="btn btn-primary">更新学习目标</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">最近学习</div>
+                        <div class="card-body">
+                            <ul id="recent-concepts" class="list-group"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习路径页面 -->
+        <div id="learning-path-page" class="page-content">
+            <h2>学习路径</h2>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">生成学习路径</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="path-topic" class="form-label">学习主题</label>
+                                <input type="text" id="path-topic" class="form-control" placeholder="例如：操作系统、计算机组成原理">
+                            </div>
+                            <button id="generate-path-btn" class="btn btn-primary">生成学习路径</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="learning-path-container" class="d-none">
+                <div class="card">
+                    <div class="card-header">个性化学习路径</div>
+                    <div class="card-body">
+                        <div id="path-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 概念探索页面 -->
+        <div id="concept-explorer-page" class="page-content">
+            <h2>概念探索</h2>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">探索概念</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="concept-search" class="form-label">搜索概念</label>
+                                <input type="text" id="concept-search" class="form-control" placeholder="输入想要了解的概念...">
+                            </div>
+                            <button id="explain-concept-btn" class="btn btn-primary">解释概念</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="concept-explanation-container" class="d-none">
+                <div class="card">
+                    <div class="card-header">概念解释</div>
+                    <div class="card-body">
+                        <div id="concept-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 练习中心页面 -->
+        <div id="practice-page" class="page-content">
+            <h2>练习中心</h2>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">生成练习题</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exercise-concept" class="form-label">概念</label>
+                                <input type="text" id="exercise-concept" class="form-control" placeholder="输入想要练习的概念...">
+                            </div>
+                            <button id="generate-exercises-btn" class="btn btn-primary">生成练习题</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="exercises-container" class="d-none">
+                <div class="card">
+                    <div class="card-header">练习题</div>
+                    <div class="card-body">
+                        <div id="exercises-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API密钥设置模态框 -->
+    <div class="modal fade" id="api-key-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">设置API密钥</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>请输入您的OpenAI API密钥以启用AI功能：</p>
+                    <div class="mb-3">
+                        <label for="api-key-input" class="form-label">API密钥</label>
+                        <input type="password" class="form-control" id="api-key-input">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="save-api-key">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/pathGenerator.js"></script>
+    <script src="js/conceptExplainer.js"></script>
+    <script src="js/exerciseGenerator.js"></script>
+    <script src="js/progressTracker.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
