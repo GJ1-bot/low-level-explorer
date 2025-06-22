@@ -1,0 +1,93 @@
+/* styles.css - 样式文件 */
+
+/* 页面内容 */
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+}
+
+/* 卡片样式 */
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* 进度条样式 */
+.progress {
+    height: 20px;
+}
+
+.progress-bar {
+    background-color: #4a6cf7;
+}
+
+.progress-stats {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* 概念标签 */
+.concept-tag {
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.concept-tag:hover {
+    transform: scale(1.05);
+}
+
+/* 代码块样式 */
+pre {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* 学习路径样式 */
+.path-stage {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-left: 4px solid #4a6cf7;
+    background-color: #f8f9fa;
+}
+
+.path-stage h3 {
+    margin-top: 0;
+    color: #4a6cf7;
+}
+
+/* 资源列表样式 */
+.resource-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.resource-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.resource-item:last-child {
+    border-bottom: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
